@@ -14,6 +14,30 @@ class thePuzzle{
     changeCell(value, row, column){
         this.puzzle[row][column] = value
     }
+    
+    solve(){
+
+    }
+
+    verifyColumn(){
+
+    }
+
+    verifyRow(){
+
+    }
+
+    verifyBox(){
+
+    }
+
+    solve(){
+
+    }
+
+    updateScreen(){
+
+    }
 
 }
 
