@@ -121,6 +121,8 @@ class thePuzzle{
     }
 
     updateDisplay(row, column, value){
+        row = row.toString()
+        column = column.toString()
         let id = row + column
         document.getElementById(id).value = value
     }
@@ -148,4 +150,53 @@ cell.forEach(input => {
 solveButton.addEventListener('click', () => { 
     puzz.solve()
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
