@@ -32,8 +32,11 @@ class thePuzzle{
                if(this.restrictedValues[i][j] == false){
                    this.puzzle[i][j]++
 
+                   this.updateDisplay(i, j, this.puzzle[i][j])
+
                    if(this.puzzle[i][j] > 9){
                        this.puzzle[i][j] = 0
+                       this.updateDisplay(i, j, this.puzzle[i][j])
                        if(j == 0){
                            i--
                            j = 9
@@ -53,45 +56,7 @@ class thePuzzle{
                    else if(this.verifyRow(i,this.puzzle[i][j]) == false || this.verifyColumn(j,this.puzzle[i][j]) == false || this.verifyBox(i,j,this.puzzle[i][j]) == false){
                        j--
                    }
-               } 
-                
-                
-                
-                
-                
-                
-                /*if(this.restrictedValues != true){
-                    if(this.puzzle[i][j] < 9){
-                        this.puzzle[i][j]++
-                        if(!this.verifyRow(i, this.puzzle[i][j])){j--}
-                        if(!this.verifyColumn(j, this.puzzle[i][j])){j--}
-                        if(!this.verifyBox(i, j, this.puzzle[i][j])){j--}
-                    }
-                    else{
-                        this.puzzle[i][j] = 0
-                        if(j > 0){
-                            j -= 2
-                            while(this.restrictedValues[i][j+1] == true){
-                                j--
-                                if(j < -1){
-                                    j = 7
-                                    i--
-                                }
-                            }
-                        }
-                        else{ 
-                            j = 7
-                            i--
-                            while(this.restrictedValues[i][j+1] == true){
-                                j--
-                                if(j < -1){
-                                    j = 7
-                                    i--
-                                }
-                            }
-                        }
-                    }
-                }7*/
+                }
             }
         }
     }
@@ -155,8 +120,9 @@ class thePuzzle{
         }
     }
 
-    updateScreen(){
-
+    updateDisplay(row, column, value){
+        let id = row + column
+        document.getElementById(id).value = value
     }
 }
 
@@ -182,3 +148,4 @@ cell.forEach(input => {
 solveButton.addEventListener('click', () => { 
     puzz.solve()
 })
+
