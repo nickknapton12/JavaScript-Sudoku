@@ -12,8 +12,10 @@ I am currently only using a backtracking algorithm to solve puzzles inputted, th
 
 ## Future Plans
 
+- Document code
 - Clean up the visual look of the website and give a professional feel
 - Add slider to speed of the algorithm to better visualize how the algorithms work
 - Add additional algorithms to solve puzzle
 - Add feature to be able to generate random puzzles, for users who just want to see it work without needing to find a puzzle online to solve.
 - Add some sort of short tutorial for users who have never visited the site, aswell as a button to allow users to re visit the tutorial
+
