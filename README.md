@@ -1,6 +1,7 @@
 # Sudoku Solver
 
 https://nickknapton12.github.io/JavaScript-Sudoku-Solver/
+
 Welcome to my Sudoku solver! I built this based off my C++ Sudoku solver I had already built, but much better. The classic Sudoku game involves a grid of 81 squares. The grid is divided into nine blocks, each containing nine squares. The rules of the game are simple: each of the nine blocks has to contain all the numbers 1-9 within its squares. Each number can only appear once in a row, column or box. 
 
 ## How to use
