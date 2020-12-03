@@ -16,7 +16,6 @@ I am currently only using a backtracking algorithm to solve puzzles inputted, th
 
 ## Future Plans
 
-- Document code
 - Clean up the visual look of the website and give a professional feel
 - Add slider to speed of the algorithm to better visualize how the algorithms work
 - Add additional algorithms to solve puzzle
