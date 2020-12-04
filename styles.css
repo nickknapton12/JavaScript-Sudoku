@@ -11,20 +11,64 @@ body{
 }
 
 .headerWrapper{
-    height: 10vh;
+    height: 9vh;
     width: auto;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: start;
+    align-content: center;
+
     background-color: black;
 }
 
-.headerButton{
-    background-color: white;
-    margin: 1vh;
+.sliderWrapper{
+    width:15%;
+    margin-right: 12.2%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+h1{
+    font-size: 50px;
+    margin: 5px 4% 0 1%;
+    font-family: 'Courgette', cursive;
+    color: white;
+}
+
+h2{
+    font-size: 16px;
+    color:white;
+}
+
+.slider{
+    width: 100%;
     outline: none;
-    -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.75);
+    margin: 0 0 0 0;
+    justify-self: center;
+}
+
+.headerRectangle{
+    height: 70%;
+    width: 3px;
+    margin: 0 0 0 0;
+    background-color: white;
+}
+
+.solveButton{
+    background-color: transparent;
+    color:white;
+
+    border:none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+
+    border-radius: 10px;
+    width: auto;
+    margin: 0 21.2% 0 21.2%;
+    font-size: 45px;
+    font-family: 'Courgette', cursive;
 }
 
 .puzzleWrapper{
