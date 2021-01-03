@@ -1,8 +1,8 @@
 class thePuzzle{
     constructor(){
 
-        // This array represents the puzzle at any given time
 
+        // This array represents the puzzle at any given time
         this.puzzle = [['','','','','','','','',''],
                        ['','','','','','','','',''],
                        ['','','','','','','','',''],
@@ -14,8 +14,9 @@ class thePuzzle{
                        ['','','','','','','','','']]
 
 
-        /*This array is used to hold "safe values", these are values the user puts in that are deemed safe (true), the algorithm
-          cannot change safe values and will skip over them.
+        /*
+        This array is used to hold "safe values", these are values the user puts in that are deemed safe (true), the algorithm
+        cannot change safe values and will skip over them.
         */
         this.restrictedValues = [[false,false,false,false,false,false,false,false,false],
                                 [false,false,false,false,false,false,false,false,false],
@@ -26,59 +27,89 @@ class thePuzzle{
                                 [false,false,false,false,false,false,false,false,false],
                                 [false,false,false,false,false,false,false,false,false],
                                 [false,false,false,false,false,false,false,false,false]]
+
+
+        //This represents the current position of the solver, rows are first followed by columns
+        this.currentSquare = [0,0]
     }
 
-    /* The changeCell function is responsible for changing the values of the puzzle to value passed in at the row and column passed
-       in, it also changes the value of the restrictedValues to true at that position, signifying a "safe value"
+
+    /* 
+    The changeCell function is responsible for changing the values of the puzzle to value passed in at the row and column passed
+    in, it also changes the value of the restrictedValues to true at that position, signifying a "safe value"
     */
     changeCell(value, row, column){
         this.puzzle[row][column] = value
         this.restrictedValues[row][column] = true
     }
 
-    /*  This is where the backtracking algorithm is, it goes through each row checking each value to see if first it is not a
-        restricted value (safe value), then the value is incrimented up by 1, and if the value is greater than 9 it is set back
-        to 0 and we move back to the last restricted value to repeat. If the value is not greater than 9, it calls verifyRow,
-        verifyColumn, and verifyBox to check if that value follows the rules of sudoku. If it does we move to next value, if 
-        not we stay at the current value to incriment again.
+
+    /*
+    This is where the backtracking algorithm is, it is called everytime the interval is run and simply increases the value at the current
+    position (currentSquare) so long as the value is below 9. It then updates the cell and makes sure at the current position that the 3 
+    rules of sudoku game are followed. If the 3 rules are followed we use nextSquare() to go to the next non restricted square then end 
+    the function to await the interval. 
+
+    In the case the current position is 9, we set it to 0 and use previousSquare() to go back to the previous non restricted square. 
     */
     solve(){
-        for(var i = 0; i < 9; i++){
-            for(var j = 0; j < 9; j++){
-               if(this.restrictedValues[i][j] == false){
-                   this.puzzle[i][j]++
-
-                   this.updateDisplay(i, j, this.puzzle[i][j])
-
-                   if(this.puzzle[i][j] > 9){
-                       this.puzzle[i][j] = 0
-                       this.updateDisplay(i, j, this.puzzle[i][j])
-                       if(j == 0){
-                           i--
-                           j = 9
-                       }
-                       j--
-                       while(this.restrictedValues[i][j] == true){
-                           if(j == 0){
-                               i--
-                               j = 8
-                           }
-                           else{
-                               j--
-                           }
-                       }
-                       j--
-                   }
-                   else if(this.verifyRow(i,this.puzzle[i][j]) == false || this.verifyColumn(j,this.puzzle[i][j]) == false || this.verifyBox(i,j,this.puzzle[i][j]) == false){
-                       j--
-                   }
-                }
-            }
+        if(this.puzzle[this.currentSquare[0]][this.currentSquare[1]] < 9){
+            this.puzzle[this.currentSquare[0]][this.currentSquare[1]]++;
+        }else{
+            this.puzzle[this.currentSquare[0]][this.currentSquare[1]] = 0;
+            this.previousSquare();
+            this.updateDisplay(this.currentSquare[0], this.currentSquare[1], this.puzzle[this.currentSquare[0]][this.currentSquare[1]]);
+            return;
         }
+
+        this.updateDisplay(this.currentSquare[0], this.currentSquare[1], this.puzzle[this.currentSquare[0]][this.currentSquare[1]]);
+
+        if(this.verifyRow(this.currentSquare[0], this.puzzle[this.currentSquare[0]][this.currentSquare[1]]) && 
+        this.verifyColumn(this.currentSquare[1], this.puzzle[this.currentSquare[0]][this.currentSquare[1]]) && 
+        this.verifyBox(this.currentSquare[0], this.currentSquare[1], this.puzzle[this.currentSquare[0]][this.currentSquare[1]])){
+            this.nextSquare();
+        }
+
+        return;
+
     }
 
-    // verifyColumn takes a column number and a value to be checked and returns true if its the only of that value in the column
-    // and returns false if there is more then one of that value in the column.
+    /*
+    This function is responsible to moving the current position (currentSquare) to the next availible (non restricted) position on the board.
+    */
+    nextSquare(){
+    do{
+        if(this.currentSquare[1] < 8){
+            this.currentSquare[1]++;   
+        }
+        else{
+            this.currentSquare[1] = 0;
+            this.currentSquare[0]++;
+        }
+    }while(this.restrictedValues[this.currentSquare[0]][this.currentSquare[1]]);
+    }
+
+
+    /*
+    This function is responsible to moving the current position (currentSquare) to the previous availible (non restricted) position on the board.
+    */
+    previousSquare(){
+        do{
+            if(this.currentSquare[1] > 0){
+                this.currentSquare[1]--;   
+            }
+            else{
+                this.currentSquare[1] = 8;
+                this.currentSquare[0]--;
+            }
+        }while(this.restrictedValues[this.currentSquare[0]][this.currentSquare[1]]);
+    }
+
+
+    /*
+    verifyColumn takes a column number and a value to be checked and returns true if its the only of that value in the column
+    and returns false if there is more then one of that value in the column.
+    */
     verifyColumn(column, value){
         let n = 0
         for(var i = 0; i < 9; i++){
@@ -94,8 +125,10 @@ class thePuzzle{
         }
     }
 
-    // verifyRow takes a row number and a value to be checked and returns true if its the only of that value in the row
-    // and returns false if there is more then one of that value in the row.
+    /*
+    verifyRow takes a row number and a value to be checked and returns true if its the only of that value in the row
+    and returns false if there is more then one of that value in the row.
+    */
     verifyRow(row, value){
         let n = 0
         for(var i = 0; i < 9; i++){
@@ -111,8 +144,10 @@ class thePuzzle{
         }
     }
 
-    // verifyBox takes in a row and column and a value to check, and returns true if its the only of that value in the box
-    // and false if not. 
+    /*
+    verifyBox takes in a row and column and a value to check, and returns true if its the only of that value in the box
+    and false if not. 
+    */
     verifyBox(row, column, value){
         let box = parseInt(row/3)
         if(box == 0){row = 0}
@@ -142,17 +177,24 @@ class thePuzzle{
         }
     }
 
-    //updateDisplay takes in a row, column and value and updates that cell with the new value, from a performance view
-    //this is much better then updating the whole puzzle everytime.
+
+
+    finished(){
+        clearInterval(interval);
+    }
+
+
+    /*
+    updateDisplay takes in a row, column and value and updates that cell with the new value, from a performance view
+    this is much better then updating the whole puzzle everytime.
+    */
     updateDisplay(row, column, value){
-        row = row.toString()
-        column = column.toString()
-        let id = row + column
-        document.getElementById(id).value = value
+        row = row.toString();
+        column = column.toString();
+        let id = row + column;
+        document.getElementById(id).value = value;
     }
 }
-
-
 
 
 cell = document.querySelectorAll('input')
@@ -160,11 +202,11 @@ solveButton = document.querySelector('button')
 
 const puzz = new thePuzzle()
 
-
-// This section checks for new inputs in any cell and makes sure if its a valid number (0< x <=9), if its valid,
-// it takes the id of the input cell and calls change cell with the row being the first number of the id, and the 
-// column being the second number of the id. For example the first cell has id="00" denoting row 0 and column 0,
-// or the bottom right cell has id="88" denoting row 8 and column 8.
+/* This section checks for new inputs in any cell and makes sure if its a valid number (0 < x <= 9), if its valid,
+it takes the id of the input cell and calls change cell with the row being the first number of the id, and the 
+column being the second number of the id. For example the first cell has id="00" denoting row 0 and column 0,
+or the bottom right cell has id="88" denoting row 8 and column 8.
+*/
 cell.forEach(input => {
     input.addEventListener('input', () => {
         if(input.value > '0' && input.value <= '9'){
@@ -174,9 +216,14 @@ cell.forEach(input => {
             input.value = ''
         }
     })
-})
+});
 
-//Listens for a button presson the "solve" button and then calls the puzzles solve function.
+/*
+Listens for a button presson the "solve" button and then calls the puzzles solve function.
 solveButton.addEventListener('click', () => { 
-    puzz.solve()
-})
+*/
+solveButton.addEventListener('click', repeat);
+
+function repeat(){
+    var interval = setInterval( () => puzz.solve(), 100);
+}
