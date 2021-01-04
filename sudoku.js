@@ -31,6 +31,7 @@ class thePuzzle{
 
         //This represents the current position of the solver, rows are first followed by columns
         this.currentSquare = [0,0]
+        this.lastSquare = [0,0]
     }
 
 
@@ -78,6 +79,11 @@ class thePuzzle{
     This function is responsible to moving the current position (currentSquare) to the next availible (non restricted) position on the board.
     */
     nextSquare(){
+    let lastRow = this.currentSquare[0].toString();
+    let lastColumn = this.currentSquare[1].toString();
+    let id = lastRow + lastColumn;
+    document.getElementById(id).style.color = "white";
+
     do{
         if(this.currentSquare[1] < 8){
             this.currentSquare[1]++;   
@@ -87,6 +93,10 @@ class thePuzzle{
             this.currentSquare[0]++;
         }
     }while(this.restrictedValues[this.currentSquare[0]][this.currentSquare[1]]);
+    lastRow = this.currentSquare[0].toString();
+    lastColumn = this.currentSquare[1].toString();
+    id = lastRow + lastColumn;
+    document.getElementById(id).style.color = "blue";
     }
 
 
@@ -94,6 +104,10 @@ class thePuzzle{
     This function is responsible to moving the current position (currentSquare) to the previous availible (non restricted) position on the board.
     */
     previousSquare(){
+        let lastRow = this.currentSquare[0].toString();
+        let lastColumn = this.currentSquare[1].toString();
+        let id = lastRow + lastColumn;
+        document.getElementById(id).style.color = "white";
         do{
             if(this.currentSquare[1] > 0){
                 this.currentSquare[1]--;   
@@ -103,6 +117,10 @@ class thePuzzle{
                 this.currentSquare[0]--;
             }
         }while(this.restrictedValues[this.currentSquare[0]][this.currentSquare[1]]);
+        lastRow = this.currentSquare[0].toString();
+        lastColumn = this.currentSquare[1].toString();
+        id = lastRow + lastColumn;
+        document.getElementById(id).style.color = "blue";
     }
 
 
@@ -193,12 +211,19 @@ class thePuzzle{
         column = column.toString();
         let id = row + column;
         document.getElementById(id).value = value;
+        
     }
 }
 
+var slider = document.getElementById('myRange')
+var speed = slider.value;
 
 cell = document.querySelectorAll('input')
 solveButton = document.querySelector('button')
+
+clearSol = document.getElementById('clearSol')
+clearPuzz = document.getElementById('clearPuzz')
+examplePuzz = document.getElementById('examplePuzz')
 
 const puzz = new thePuzzle()
 
@@ -224,6 +249,11 @@ solveButton.addEventListener('click', () => {
 */
 solveButton.addEventListener('click', repeat);
 
+slider.oninput = function(){
+    slider = this.value;
+    speed = 100 - slider;
+}
+
 function repeat(){
-    var interval = setInterval( () => puzz.solve(), 100);
+    var interval = setInterval( () => puzz.solve(), speed);
 }
