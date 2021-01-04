@@ -37,8 +37,9 @@ h1{
 }
 
 h2{
-    font-size: 16px;
     color:white;
+    margin: 0 0 2% 0;
+    text-align: center;
 }
 
 a{
@@ -46,10 +47,18 @@ a{
     text-decoration: none;
 }
 
+p{
+    color:white;
+    font-size: 14px;
+    text-align: center;
+    margin:0;
+}
+
+
 .slider{
     width: 100%;
     outline: none;
-    margin: 0 0 0 0;
+    margin: 0 0 5% 0;
     justify-self: center;
 }
 
@@ -75,8 +84,8 @@ a{
     background-color: transparent;
     color:white;
 
+    cursor:pointer;
     border:none;
-    cursor: pointer;
     overflow: hidden;
     outline: none;
 
@@ -87,10 +96,55 @@ a{
     font-family: 'Courgette', cursive;
 }
 
+.page{
+    display: flex;
+}
+
+.toolBar{
+    background-color: black;
+    margin: 13vh 0 0 3.5vw;
+    height: 43vh;
+    width: 18vw;
+    border-radius: 8px;
+}
+
+.toolbarTitle{
+    font-size: 40px;
+    text-align: center;
+    font-family: 'Courgette', cursive;
+    margin: 5% 0 8% 0;
+}
+
+.toolButton{
+    font-family: 'Anton', sans-serif;
+    width:80%;
+    margin: 5% 0 0 10%;
+    background-color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 20px;
+    outline: none;
+    cursor:pointer;
+}
+
+.slidecontainer {
+    width: 100%;
+}
+  
+.slider:hover {
+    opacity: 1;
+}
+
+.slider{
+    width: 90%;
+    margin-left:5%;
+}
+
 .puzzleWrapper{
     height: 80vh;
     width: 50vw;
-    margin:2vh 25vw 0 25vw;
+    justify-items: center;
+    margin:2vh 0 0 3.5vw;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     border: 3px solid white;
