@@ -13,7 +13,6 @@ class thePuzzle{
                        ['','','','','','','','',''],
                        ['','','','','','','','','']]
 
-
         /*
         This array is used to hold "safe values", these are values the user puts in that are deemed safe (true), the algorithm
         cannot change safe values and will skip over them.
@@ -31,7 +30,6 @@ class thePuzzle{
 
         //This represents the current position of the solver, rows are first followed by columns
         this.currentSquare = [0,0]
-        this.lastSquare = [0,0]
     }
 
 
@@ -44,6 +42,39 @@ class thePuzzle{
         this.restrictedValues[row][column] = true
     }
 
+    clear(){
+        this.puzzle = [['','','','','','','','',''],
+                       ['','','','','','','','',''],
+                       ['','','','','','','','',''],
+                       ['','','','','','','','',''],
+                       ['','','','','','','','',''],
+                       ['','','','','','','','',''],
+                       ['','','','','','','','',''],
+                       ['','','','','','','','',''],
+                       ['','','','','','','','','']];
+
+        this.restrictedValues = [[false,false,false,false,false,false,false,false,false],
+                       [false,false,false,false,false,false,false,false,false],
+                       [false,false,false,false,false,false,false,false,false],
+                       [false,false,false,false,false,false,false,false,false],
+                       [false,false,false,false,false,false,false,false,false],
+                       [false,false,false,false,false,false,false,false,false],
+                       [false,false,false,false,false,false,false,false,false],
+                       [false,false,false,false,false,false,false,false,false],
+                       [false,false,false,false,false,false,false,false,false]];
+    
+        this.currentSquare = [0,0]
+
+        for(let i = 0; i < 9; i++){
+            for(let j = 0; j < 9; j++){
+                let row = i.toString();
+                let column = j.toString();
+                let id = row + column;
+                document.getElementById(id).value = this.puzzle[i][j];
+            }
+        }
+    }
+
 
     /*
     This is where the backtracking algorithm is, it is called everytime the interval is run and simply increases the value at the current
@@ -54,6 +85,9 @@ class thePuzzle{
     In the case the current position is 9, we set it to 0 and use previousSquare() to go back to the previous non restricted square. 
     */
     solve(){
+        if(this.currentSquare[0] == 0 && this.currentSquare[1] == 0 && this.restrictedValues[0][0] == true){
+            this.nextSquare();
+        }
         if(this.puzzle[this.currentSquare[0]][this.currentSquare[1]] < 9){
             this.puzzle[this.currentSquare[0]][this.currentSquare[1]]++;
         }else{
@@ -71,8 +105,47 @@ class thePuzzle{
             this.nextSquare();
         }
 
+        if(puzz.solved()){
+            clearInterval(interval);
+        }
+
         return;
 
+    }
+
+    /*
+    Because of browser restriction on interval delays being no less than 4ms, this function is needed to solve puzzles instantly. It works
+    virtually the same however uses loops to go through the puzzle solving it as it goes.
+    */
+    solveInstant(){
+        for(let i = 0; i < 9; i++){
+            for(let j = 0; j < 9; j++){
+                if(this.restrictedValues[this.currentSquare[0]][this.currentSquare[1]] == false){
+                    if(this.puzzle[this.currentSquare[0]][this.currentSquare[1]] < 9){
+                        this.puzzle[this.currentSquare[0]][this.currentSquare[1]]++;
+                        if(this.verifyRow(this.currentSquare[0], this.puzzle[this.currentSquare[0]][this.currentSquare[1]]) && 
+                        this.verifyColumn(this.currentSquare[1], this.puzzle[this.currentSquare[0]][this.currentSquare[1]]) && 
+                        this.verifyBox(this.currentSquare[0], this.currentSquare[1], this.puzzle[this.currentSquare[0]][this.currentSquare[1]])){
+                        //this.updateDisplay(this.currentSquare[i],this.currentSquare[1],this.puzzle[i][j]);
+                        this.nextSquare();
+                        i = this.currentSquare[0];
+                        j = this.currentSquare[1];
+                        }
+                    }else{
+                        this.puzzle[this.currentSquare[0]][this.currentSquare[1]] = 0;
+                        //this.updateDisplay(this.currentSquare[0],this.currentSquare[1],this.puzzle[i][j]);
+                        this.previousSquare();
+                        i = this.currentSquare[0];
+                        j = this.currentSquare[1];
+                    }
+                }else{
+                    this.nextSquare();
+                    i = this.currentSquare[0];
+                    j = this.currentSquare[1];
+                }
+            }
+        }
+        this.updateWholeDisplay();
     }
 
     /*
@@ -195,10 +268,13 @@ class thePuzzle{
         }
     }
 
-
-
-    finished(){
-        clearInterval(interval);
+    solved(){
+        if(this.currentSquare[0] >= 9){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 
@@ -211,7 +287,17 @@ class thePuzzle{
         column = column.toString();
         let id = row + column;
         document.getElementById(id).value = value;
-        
+    }
+
+    updateWholeDisplay(){
+        for(let i = 0; i < 9; i++){
+            for(let j = 0; j < 9; j++){
+                let row = i.toString();
+                let column = j.toString();
+                let id = row + column;
+                document.getElementById(id).value = this.puzzle[i][j];
+            }
+        }
     }
 }
 
@@ -248,6 +334,8 @@ Listens for a button presson the "solve" button and then calls the puzzles solve
 solveButton.addEventListener('click', () => { 
 */
 solveButton.addEventListener('click', repeat);
+
+clearPuzz.addEventListener('click', puzz.clear);
 
 slider.oninput = function(){
     slider = this.value;
