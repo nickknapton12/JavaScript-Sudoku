@@ -1,4 +1,4 @@
-# Test Sudoku Solver
+# Sudoku Solver
 
 https://nickknapton12.github.io/Sudoku-Solver-Visualizer/
 
