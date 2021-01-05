@@ -11,7 +11,7 @@ class thePuzzle{
                        ['','','','','','','','',''],
                        ['','','','','','','','',''],
                        ['','','','','','','','',''],
-                       ['','','','','','','','','']]
+                       ['','','','','','','','','']];
 
         /*
         This array is used to hold "safe values", these are values the user puts in that are deemed safe (true), the algorithm
@@ -52,6 +52,7 @@ class thePuzzle{
                        ['','','','','','','','',''],
                        ['','','','','','','','',''],
                        ['','','','','','','','','']];
+                        
 
         this.restrictedValues = [[false,false,false,false,false,false,false,false,false],
                        [false,false,false,false,false,false,false,false,false],
@@ -73,6 +74,21 @@ class thePuzzle{
                 document.getElementById(id).value = this.puzzle[i][j];
             }
         }
+    }
+
+    clearSol(){
+        clearInterval(interval);
+        for(let i = 0; i < 9; i++){
+            for(let j = 0; j < 9; j++){
+                if(this.restrictedValues[i][j] == false){
+                    this.puzzle[i][j] = '';
+                }
+            }
+        }
+    }
+
+    examplePuzz(){
+
     }
 
 
@@ -105,15 +121,45 @@ class thePuzzle{
             this.nextSquare();
         }
 
-        if(puzz.solved()){
-            clearInterval(interval);
-        }
-
         return;
 
     }
 
-   
+    /*
+    Because of browser restriction on interval delays being no less than 4ms, this function is needed to solve puzzles instantly. It works
+    virtually the same however uses loops to go through the puzzle solving it as it goes.
+    */
+    solveInstant(){
+        for(let i = 0; i < 9; i++){
+            for(let j = 0; j < 9; j++){
+                if(this.restrictedValues[this.currentSquare[0]][this.currentSquare[1]] == false){
+                    if(this.puzzle[this.currentSquare[0]][this.currentSquare[1]] < 9){
+                        this.puzzle[this.currentSquare[0]][this.currentSquare[1]]++;
+                        if(this.verifyRow(this.currentSquare[0], this.puzzle[this.currentSquare[0]][this.currentSquare[1]]) && 
+                        this.verifyColumn(this.currentSquare[1], this.puzzle[this.currentSquare[0]][this.currentSquare[1]]) && 
+                        this.verifyBox(this.currentSquare[0], this.currentSquare[1], this.puzzle[this.currentSquare[0]][this.currentSquare[1]])){
+                        //this.updateDisplay(this.currentSquare[i],this.currentSquare[1],this.puzzle[i][j]);
+                        this.nextSquare();
+                        i = this.currentSquare[0];
+                        j = this.currentSquare[1];
+                        }
+                    }else{
+                        this.puzzle[this.currentSquare[0]][this.currentSquare[1]] = 0;
+                        //this.updateDisplay(this.currentSquare[0],this.currentSquare[1],this.puzzle[i][j]);
+                        this.previousSquare();
+                        i = this.currentSquare[0];
+                        j = this.currentSquare[1];
+                    }
+                }else{
+                    this.nextSquare();
+                    i = this.currentSquare[0];
+                    j = this.currentSquare[1];
+                }
+            }
+        }
+        this.updateWholeDisplay();
+    }
+
     /*
     This function is responsible to moving the current position (currentSquare) to the next availible (non restricted) position on the board.
     */
@@ -278,6 +324,7 @@ clearPuzz = document.getElementById('clearPuzz')
 examplePuzz = document.getElementById('examplePuzz')
 
 const puzz = new thePuzzle()
+var interval = 0;
 
 /* This section checks for new inputs in any cell and makes sure if its a valid number (0 < x <= 9), if its valid,
 it takes the id of the input cell and calls change cell with the row being the first number of the id, and the 
@@ -301,7 +348,9 @@ solveButton.addEventListener('click', () => {
 */
 solveButton.addEventListener('click', repeat);
 
-clearPuzz.addEventListener('click', puzz.clear);
+clearPuzz.addEventListener('click', clearPuzzle);
+clearSol.addEventListener('click', puzz.clearSol);
+examplePuzz.addEventListener('click', puzz.examplePuzz);
 
 slider.oninput = function(){
     slider = this.value;
@@ -309,5 +358,10 @@ slider.oninput = function(){
 }
 
 function repeat(){
-    var interval = setInterval( () => puzz.solve(), speed);
+    interval = setInterval( () => puzz.solve(), speed);
+}
+
+function clearPuzzle(){
+    clearInterval(interval);
+    puzz.clear();
 }
