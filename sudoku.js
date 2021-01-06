@@ -71,7 +71,7 @@ class thePuzzle{
                                 ['','','9','6','','','','2','7'],
                                 ['','','','','','8','','6','5']]];
 
-        this.restrictedForExamples =[[false,false,false,true,true,false,true,false,true],
+        this.restrictedForExamples = [[[false,false,false,true,true,false,true,false,true],
                                     [true,true,false,false,true,false,false,true,false],
                                     [true,true,false,false,false,true,true,false,false],
                                     [true,true,false,true,false,false,false,true,false],
