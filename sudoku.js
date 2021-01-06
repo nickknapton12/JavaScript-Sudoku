@@ -31,17 +31,7 @@ class thePuzzle{
         //This represents the current position of the solver, rows are first followed by columns
         this.currentSquare = [0,0]
 
-        this.examplePuzzles = [[['','7','','','','','','','9'],
-                                ['5','1','','4','2','','6','',''],
-                                ['','8','3','','','7','','',''],
-                                ['','','8','','','1','3','7',''],
-                                ['','2','3','','8','','','4',''],
-                                ['4','','','9','','','1','',''],
-                                ['9','6','2','8','','','','3',''],
-                                ['','','','','1','','4','',''],
-                                ['7','','','2','','3','','9','6']],
-
-                                [['','','','2','6','','7','','1'],
+        this.examplePuzzles = [[['','','','2','6','','7','','1'],
                                 ['6','8','','','7','','','9',''],
                                 ['1','9','','','','4','5','',''],
                                 ['8','2','','1','','','','4',''],
@@ -81,17 +71,7 @@ class thePuzzle{
                                 ['','','9','6','','','','2','7'],
                                 ['','','','','','8','','6','5']]];
 
-        this.restrictedForExamples = [[[false,true,false,false,false,false,false,false,true],
-                                    [true,true,false,true,true,false,true,false,false],
-                                    [false,true,true,false,false,true,false,false,false],
-                                    [false,false,true,false,false,true,true,true,false],
-                                    [false,true,true,false,true,false,false,true,false],
-                                    [true,false,false,true,false,false,true,false,false],
-                                    [true,true,true,true,false,false,false,true,false],
-                                    [false,false,false,false,true,false,true,false,false],
-                                    [true,false,false,true,false,true,false,true,true]],
-
-                                    [[false,false,false,true,true,false,true,false,true],
+        this.restrictedForExamples =[[false,false,false,true,true,false,true,false,true],
                                     [true,true,false,false,true,false,false,true,false],
                                     [true,true,false,false,false,true,true,false,false],
                                     [true,true,false,true,false,false,false,true,false],
@@ -191,7 +171,7 @@ class thePuzzle{
     }
 
     loadexamplePuzz(){
-        let rand = Math.floor(Math.random()*5)
+        let rand = Math.floor(Math.random()*4)
         for(let i = 0; i < 9; i++){
             for(let j = 0; j < 9; j++){
                 this.puzzle[i][j] = this.examplePuzzles[rand][i][j];
@@ -465,7 +445,7 @@ examplePuzzleButton.addEventListener('click', examplePuzz);
 
 slider.oninput = function(){
     slider = this.value;
-    speed = 100 - (parseInt(slider, 10));
+    speed = 105 - (parseInt(slider, 10));
 }
 
 function repeat(){
