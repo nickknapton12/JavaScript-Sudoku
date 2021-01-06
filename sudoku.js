@@ -217,9 +217,10 @@ class thePuzzle{
         if(this.puzzle[this.currentSquare[0]][this.currentSquare[1]] < 9){
             this.puzzle[this.currentSquare[0]][this.currentSquare[1]]++;
         }else{
-            this.puzzle[this.currentSquare[0]][this.currentSquare[1]] = 0;
-            this.previousSquare();
+            this.puzzle[this.currentSquare[0]][this.currentSquare[1]] = '';
             this.updateDisplay(this.currentSquare[0], this.currentSquare[1], this.puzzle[this.currentSquare[0]][this.currentSquare[1]]);
+            this.previousSquare();
+            //this.updateDisplay(this.currentSquare[0], this.currentSquare[1], this.puzzle[this.currentSquare[0]][this.currentSquare[1]]);
             return;
         }
 
@@ -424,7 +425,7 @@ class thePuzzle{
 }
 
 var slider = document.getElementById('myRange')
-var speed = slider.value;
+var speed = 0;
 
 cell = document.querySelectorAll('input')
 solveButton = document.querySelector('button')
