@@ -77,11 +77,12 @@ class thePuzzle{
     }
 
     clearSol(){
-        clearInterval(interval);
+        this.currentSquare = [0,0];
         for(let i = 0; i < 9; i++){
             for(let j = 0; j < 9; j++){
                 if(this.restrictedValues[i][j] == false){
                     this.puzzle[i][j] = '';
+                    this.updateDisplay(i,j,'');
                 }
             }
         }
@@ -323,7 +324,7 @@ clearSol = document.getElementById('clearSol')
 clearPuzz = document.getElementById('clearPuzz')
 examplePuzz = document.getElementById('examplePuzz')
 
-const puzz = new thePuzzle()
+var puzz = new thePuzzle()
 var interval = 0;
 
 /* This section checks for new inputs in any cell and makes sure if its a valid number (0 < x <= 9), if its valid,
@@ -349,7 +350,7 @@ solveButton.addEventListener('click', () => {
 solveButton.addEventListener('click', repeat);
 
 clearPuzz.addEventListener('click', clearPuzzle);
-clearSol.addEventListener('click', puzz.clearSol);
+clearSol.addEventListener('click', clearSolution);
 examplePuzz.addEventListener('click', puzz.examplePuzz);
 
 slider.oninput = function(){
@@ -364,4 +365,9 @@ function repeat(){
 function clearPuzzle(){
     clearInterval(interval);
     puzz.clear();
+}
+
+function clearSolution(){
+    clearInterval(interval);
+    puzz.clearSol();
 }
