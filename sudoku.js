@@ -30,6 +30,108 @@ class thePuzzle{
 
         //This represents the current position of the solver, rows are first followed by columns
         this.currentSquare = [0,0]
+
+        this.examplePuzzles = [[['','7','','','','','','','9'],
+                                ['5','1','','4','2','','6','',''],
+                                ['','8','3','','','7','','',''],
+                                ['','','8','','','1','3','7',''],
+                                ['','2','3','','8','','','4',''],
+                                ['4','','','9','','','1','',''],
+                                ['9','6','2','8','','','','3',''],
+                                ['','','','','1','','4','',''],
+                                ['7','','','2','','3','','9','6']],
+
+                                [['','','','2','6','','7','','1'],
+                                ['6','8','','','7','','','9',''],
+                                ['1','9','','','','4','5','',''],
+                                ['8','2','','1','','','','4',''],
+                                ['','','4','6','','2','9','',''],
+                                ['','5','','','','3','','2','8'],
+                                ['','','9','3','','','','7','4'],
+                                ['','4','','','5','','','3','6'],
+                                ['7','','3','','1','8','','','']],
+
+                                [['','7','','','','','','','9'],
+                                ['5','1','','4','2','','6','',''],
+                                ['','8','','3','','','7','',''],
+                                ['','','8','','','1','3','7',''],
+                                ['','2','3','','8','','','4',''],
+                                ['4','','','9','','','1','',''],
+                                ['9','6','2','8','','','','3',''],
+                                ['','','','','1','','4','',''],
+                                ['7','','','2','','3','','9','6']],
+
+                                [['1','','6','','','2','3','',''],
+                                ['','5','','','','6','','9','1'],
+                                ['','','9','5','','1','4','6','2'],
+                                ['','3','7','9','','5','','',''],
+                                ['5','8','1','','2','7','9','',''],
+                                ['','','','4','','8','1','5','7'],
+                                ['','','','2','6','','5','4',''],
+                                ['','','4','1','5','','6','','9'],
+                                ['9','','','8','7','4','2','1','']],
+
+                                [['','3','','','8','','','','1'],
+                                ['','','7','4','','1','','5',''],
+                                ['9','','','','5','','2','',''],
+                                ['','','2','','','5','','1',''],
+                                ['3','','','2','1','','5','',''],
+                                ['5','9','','','6','','','','2'],
+                                ['','','6','5','','2','','',''],
+                                ['','','9','6','','','','2','7'],
+                                ['','','','','','8','','6','5']]];
+
+        this.restrictedForExamples = [[[false,true,false,false,false,false,false,false,true],
+                                    [true,true,false,true,true,false,true,false,false],
+                                    [false,true,true,false,false,true,false,false,false],
+                                    [false,false,true,false,false,true,true,true,false],
+                                    [false,true,true,false,true,false,false,true,false],
+                                    [true,false,false,true,false,false,true,false,false],
+                                    [true,true,true,true,false,false,false,true,false],
+                                    [false,false,false,false,true,false,true,false,false],
+                                    [true,false,false,true,false,true,false,true,true]],
+
+                                    [[false,false,false,true,true,false,true,false,true],
+                                    [true,true,false,false,true,false,false,true,false],
+                                    [true,true,false,false,false,true,true,false,false],
+                                    [true,true,false,true,false,false,false,true,false],
+                                    [false,false,true,true,false,true,true,false,false],
+                                    [false,true,false,false,false,true,false,true,true],
+                                    [false,false,true,true,false,false,false,true,true],
+                                    [false,true,false,false,true,false,false,true,true],
+                                    [true,false,true,false,true,true,false,false,false]],
+
+                                    [[false,true,false,false,false,false,false,false,true],
+                                    [true,true,false,true,true,false,true,false,false],
+                                    [false,true,false,true,false,false,true,false,false],
+                                    [false,false,true,false,false,true,true,true,false],
+                                    [false,true,true,false,true,false,false,true,false],
+                                    [true,false,false,true,false,false,true,false,false],
+                                    [true,true,true,true,false,false,false,true,false],
+                                    [false,false,false,false,true,false,true,false,false],
+                                    [true,false,false,true,false,true,false,true,true]],
+
+                                    [[true,false,true,false,false,true,true,false,false],
+                                    [false,true,false,false,false,true,false,true,true],
+                                    [false,false,true,true,false,true,true,true,true],
+                                    [false,true,true,true,false,true,false,false,false],
+                                    [true,true,true,false,true,true,true,false,false],
+                                    [false,false,false,true,false,true,true,true,true],
+                                    [false,false,false,true,true,false,true,true,false],
+                                    [false,false,true,true,true,false,true,false,true],
+                                    [true,false,false,true,true,true,true,true,false]],
+
+                                    [[false,true,false,false,true,false,false,false,true],
+                                    [false,false,true,true,false,true,false,true,false],
+                                    [true,false,false,false,true,false,true,false,false],
+                                    [false,false,true,false,false,true,false,true,false],
+                                    [true,false,false,true,true,false,true,false,false],
+                                    [true,true,false,false,true,false,false,false,true],
+                                    [false,false,true,true,false,true,false,false,false],
+                                    [false,false,true,true,false,false,false,true,true],
+                                    [false,false,false,false,false,true,false,true,true]]];
+
+                                    
     }
 
 
@@ -88,8 +190,15 @@ class thePuzzle{
         }
     }
 
-    examplePuzz(){
-
+    loadexamplePuzz(){
+        let rand = Math.floor(Math.random()*5)
+        for(let i = 0; i < 9; i++){
+            for(let j = 0; j < 9; j++){
+                this.puzzle[i][j] = this.examplePuzzles[rand][i][j];
+                this.restrictedValues[i][j] = this.restrictedForExamples[rand][i][j];
+                this.updateDisplay(i,j,this.puzzle[i][j]);
+            }
+        }
     }
 
 
@@ -320,9 +429,9 @@ var speed = slider.value;
 cell = document.querySelectorAll('input')
 solveButton = document.querySelector('button')
 
-clearSol = document.getElementById('clearSol')
-clearPuzz = document.getElementById('clearPuzz')
-examplePuzz = document.getElementById('examplePuzz')
+clearSolutionButton = document.getElementById('clearSol')
+clearPuzzleButton = document.getElementById('clearPuzz')
+examplePuzzleButton = document.getElementById('examplePuzz')
 
 var puzz = new thePuzzle()
 var interval = 0;
@@ -349,13 +458,13 @@ solveButton.addEventListener('click', () => {
 */
 solveButton.addEventListener('click', repeat);
 
-clearPuzz.addEventListener('click', clearPuzzle);
-clearSol.addEventListener('click', clearSolution);
-examplePuzz.addEventListener('click', puzz.examplePuzz);
+clearPuzzleButton.addEventListener('click', clearPuzzle);
+clearSolutionButton.addEventListener('click', clearSolution);
+examplePuzzleButton.addEventListener('click', examplePuzz);
 
 slider.oninput = function(){
     slider = this.value;
-    speed = 100 - slider;
+    speed = 100 - (parseInt(slider, 10));
 }
 
 function repeat(){
@@ -370,4 +479,10 @@ function clearPuzzle(){
 function clearSolution(){
     clearInterval(interval);
     puzz.clearSol();
+}
+
+function examplePuzz(){
+    clearInterval(interval);
+    puzz.clear();
+    puzz.loadexamplePuzz();
 }
