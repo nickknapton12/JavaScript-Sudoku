@@ -18,4 +18,3 @@ I am currently only using a backtracking algorithm to solve puzzles inputted, th
 
 - Add additional algorithms to solve puzzle
 - Add some sort of short tutorial for users who have never visited the site
-- Add animation to signify puzzle has been solved
