@@ -71,7 +71,7 @@ class thePuzzle{
                                 ['','','9','6','','','','2','7'],
                                 ['','','','','','8','','6','5']]];
 
-        this.restrictedForExamples = [[[false,false,false,true,true,false,true,false,true],
+        this.restrictedForExamples =[[[false,false,false,true,true,false,true,false,true],
                                     [true,true,false,false,true,false,false,true,false],
                                     [true,true,false,false,false,true,true,false,false],
                                     [true,true,false,true,false,false,false,true,false],
@@ -191,6 +191,12 @@ class thePuzzle{
     In the case the current position is 9, we set it to 0 and use previousSquare() to go back to the previous non restricted square. 
     */
     solve(){
+        if(this.currentSquare[0] == 9){
+            this.finishAnimation();
+            clearInterval(interval);
+            return
+        }
+
         if(this.currentSquare[0] == 0 && this.currentSquare[1] == 0 && this.restrictedValues[0][0] == true){
             this.nextSquare();
         }
@@ -248,7 +254,7 @@ class thePuzzle{
                 }
             }
         }
-        this.updateWholeDisplay();
+        
     }
 
     /*
@@ -392,15 +398,21 @@ class thePuzzle{
         document.getElementById(id).value = value;
     }
 
-    updateWholeDisplay(){
+    updateWholeDisplayColor(color){
         for(let i = 0; i < 9; i++){
             for(let j = 0; j < 9; j++){
                 let row = i.toString();
                 let column = j.toString();
                 let id = row + column;
-                document.getElementById(id).value = this.puzzle[i][j];
+                document.getElementById(id).style.color = color;
             }
         }
+    }
+
+    finishAnimation(){
+        this.updateWholeDisplayColor('green');
+
+        setTimeout("puzz.updateWholeDisplayColor('white')", 350)
     }
 }
 
