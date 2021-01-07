@@ -31,6 +31,7 @@ class thePuzzle{
         //This represents the current position of the solver, rows are first followed by columns
         this.currentSquare = [0,0]
 
+        //This is an array of example puzzles to be loaded in
         this.examplePuzzles = [[['','','','2','6','','7','','1'],
                                 ['6','8','','','7','','','9',''],
                                 ['1','9','','','','4','5','',''],
@@ -71,6 +72,8 @@ class thePuzzle{
                                 ['','','9','6','','','','2','7'],
                                 ['','','','','','8','','6','5']]];
 
+        
+        //this is an array of the restricted values for each of the example puzzles
         this.restrictedForExamples =[[[false,false,false,true,true,false,true,false,true],
                                     [true,true,false,false,true,false,false,true,false],
                                     [true,true,false,false,false,true,true,false,false],
@@ -124,6 +127,10 @@ class thePuzzle{
         this.restrictedValues[row][column] = true
     }
 
+
+    /*
+    This function is responsible for clearing the puzzle when the clear button is pressed. It simply resets all current values and updates the display
+    */
     clear(){
         this.puzzle = [['','','','','','','','',''],
                        ['','','','','','','','',''],
@@ -158,6 +165,11 @@ class thePuzzle{
         }
     }
 
+
+    /*
+    This function is responsible for clearing the puzzles solution, it goes through and replaces any "non restricted values" to blank and leaves 
+    restricted values as is, restricted values being pieces of the original puzzle.
+    */
     clearSol(){
         this.currentSquare = [0,0];
         for(let i = 0; i < 9; i++){
@@ -170,8 +182,16 @@ class thePuzzle{
         }
     }
 
+
+    /* 
+    This is for loading example puzzles for users to be able to try the solver without the nead to find a puzzle online and enter it all in, just
+    a click of a button and one loads in! Number of puzzles is to be set to the current amount of example puzzles in this.examplePuzzles, we then
+    choose a randompuzzle and replace all of this.puzzle 's values and this.restrictedValues 's values with the example puzzles values.
+    */
     loadexamplePuzz(){
-        let rand = Math.floor(Math.random()*4)
+        let numberOfPuzzles = 4;
+        let rand = Math.floor(Math.random()*numberOfPuzzles);
+
         for(let i = 0; i < 9; i++){
             for(let j = 0; j < 9; j++){
                 this.puzzle[i][j] = this.examplePuzzles[rand][i][j];
@@ -191,10 +211,15 @@ class thePuzzle{
     In the case the current position is 9, we set it to 0 and use previousSquare() to go back to the previous non restricted square. 
     */
     solve(){
+        if(this.currentSquare[0] == -1){
+            clearInterval(interval);
+            alert("Sorry, this puzzle is unsolvable by using the backtracking algorithm! There is select few puzzles that the method of backtracking cannot solve. Please try inputting another puzzle or try one of the example pupzzles.");
+            return;
+        }
         if(this.currentSquare[0] == 9){
             this.finishAnimation();
             clearInterval(interval);
-            return
+            return;
         }
 
         if(this.currentSquare[0] == 0 && this.currentSquare[1] == 0 && this.restrictedValues[0][0] == true){
@@ -377,15 +402,6 @@ class thePuzzle{
         }
     }
 
-    solved(){
-        if(this.currentSquare[0] >= 9){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
 
     /*
     updateDisplay takes in a row, column and value and updates that cell with the new value, from a performance view
@@ -398,6 +414,8 @@ class thePuzzle{
         document.getElementById(id).value = value;
     }
 
+
+    //This function changes every spot to an inputted color.
     updateWholeDisplayColor(color){
         for(let i = 0; i < 9; i++){
             for(let j = 0; j < 9; j++){
@@ -409,6 +427,8 @@ class thePuzzle{
         }
     }
 
+
+    //This function is responsible for the 'finish' animation, it flashes all the board green for 350ms
     finishAnimation(){
         this.updateWholeDisplayColor('green');
 
@@ -449,31 +469,41 @@ cell.forEach(input => {
 Listens for a button presson the "solve" button and then calls the puzzles solve function.
 solveButton.addEventListener('click', () => { 
 */
-solveButton.addEventListener('click', repeat);
+solveButton.addEventListener('click', solver);
 
 clearPuzzleButton.addEventListener('click', clearPuzzle);
 clearSolutionButton.addEventListener('click', clearSolution);
 examplePuzzleButton.addEventListener('click', examplePuzz);
 
+
+//This is responsible for changing the speed of the solve function
 slider.oninput = function(){
     slider = this.value;
     speed = 105 - (parseInt(slider, 10));
 }
 
-function repeat(){
+
+//responsible for starting the solve function
+function solver(){
     interval = setInterval( () => puzz.solve(), speed);
 }
 
+
+//responsible for calling the clear function and stopping the solve function
 function clearPuzzle(){
     clearInterval(interval);
     puzz.clear();
 }
 
+
+//responsible for calling clearSol and stopping the solve function
 function clearSolution(){
     clearInterval(interval);
     puzz.clearSol();
 }
 
+
+//responsible for calling the clear and loadexamplePuzz function aswell as stopping the solve function
 function examplePuzz(){
     clearInterval(interval);
     puzz.clear();
