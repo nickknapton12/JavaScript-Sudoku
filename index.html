@@ -32,9 +32,9 @@
         <div class="slidecontainer">
             <input type="range" min="1" max="100" value="100" class="slider" id="myRange">
         </div>
-        <button class="toolButton" id="examplePuzz">Example Puzzle</button>
-        <button class="toolButton" id="clearSol">Clear Solution</button>
-        <button class="toolButton" id="clearPuzz">Clear Puzzle</button>
+        <button class="toolButton" id="examplePuzz"><strong>Example Puzzle</strong></button>
+        <button class="toolButton" id="clearSol"><strong>Clear Solution</strong></button>
+        <button class="toolButton" id="clearPuzz"><strong>Clear Puzzle</strong></button>
     </div>
     
     <div class="puzzleWrapper">
@@ -138,6 +138,12 @@
             <input class="puzzleCell" id="88" maxlength="1"></input>
         </div>
     </div>
+
+    <div class='aboutSection'>
+        <h2 class="toolbarTitle">Read me!</h2>
+        <p class='aboutText'><strong>HOW TO USE:</strong> Simply input puzzle to be solved, set the solve speed, and click solve! You can also use the 'example puzzle' button to generate a puzzle to try. <br><br><strong>CLEAR SOLUTION:</strong> This will erase the solved solution and leave the original unsolved puzzle so you can try different solve speeds! <br><br> <strong>ABOUT:</strong> This project was inspired by a sudoku solver I built in C++ changed into a more visual application to really see the algorithm in work. Some important notes, I recommend setting the speed to 'fast' for getting the solution and using 'slow' to really look at the algorithm. Due to the way the sudoku visualizer works with setInterval, the shortest interval time is 4ms. As a result some puzzles may take a bit of time to solve. As this is made to be a algorithm visualizer, I recommend just using a example puzzle if having troubles with your own. </p>
+    </div>
+
     </div>
     </div>
 
