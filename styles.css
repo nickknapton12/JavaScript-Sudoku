@@ -171,3 +171,18 @@ p{
     text-align:center;
     font-size: 6vh;
 }
+
+.aboutSection{
+    height: 72vh;
+    width: 20vw;
+
+    background-color: black;
+
+    margin: 6vh 0 0 2.5vw;
+    border-radius: 10px;
+}
+
+.aboutText{
+    font-size: 16px;
+    padding: 0 4% 4% 4%;
+}
