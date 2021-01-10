@@ -8,7 +8,7 @@ It is still in very early stage, it works, but isnt pretty. It still needs to be
 
 ## How to use
 
-Simply input puzzle into the grid displayed and press the solve button!
+Simply input puzzle into the grid displayed, set solve speed (fast is recommended) and press the solve button! Alternatively use an example puzzle by pressing the 'example puzzle' button.
 
 ## Algorithm
 
@@ -17,4 +17,3 @@ I am currently only using a backtracking algorithm to solve puzzles inputted, th
 ## Future Plans
 
 - Add additional algorithms to solve puzzle
-- Add some sort of short tutorial for users who have never visited the site
