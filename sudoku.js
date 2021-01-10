@@ -213,7 +213,7 @@ class thePuzzle{
     solve(){
         if(this.currentSquare[0] == -1){
             clearInterval(interval);
-            alert("Sorry, this puzzle is unsolvable by using the backtracking algorithm! There is select few puzzles that the method of backtracking cannot solve. Please try inputting another puzzle or try one of the example pupzzles.");
+            alert("Sorry, this puzzle is unsolvable by using the backtracking algorithm! There is select few puzzles that the method of backtracking cannot solve (more info on my github). Please try inputting another puzzle or try one of the example pupzzles.");
             return;
         }
         if(this.currentSquare[0] == 9){
