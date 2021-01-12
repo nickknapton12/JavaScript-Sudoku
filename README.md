@@ -15,3 +15,4 @@ I am currently only using a backtracking algorithm to solve puzzles inputted, th
 ## Future Plans
 
 - Add additional algorithms to solve puzzle
+- Make more responsive
