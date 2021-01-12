@@ -251,35 +251,40 @@ class thePuzzle{
     Because of browser restriction on interval delays being no less than 4ms, this function is needed to solve puzzles instantly. It works
     virtually the same however uses loops to go through the puzzle solving it as it goes.
     */
-    solveInstant(){
-        for(let i = 0; i < 9; i++){
-            for(let j = 0; j < 9; j++){
-                if(this.restrictedValues[this.currentSquare[0]][this.currentSquare[1]] == false){
-                    if(this.puzzle[this.currentSquare[0]][this.currentSquare[1]] < 9){
-                        this.puzzle[this.currentSquare[0]][this.currentSquare[1]]++;
-                        if(this.verifyRow(this.currentSquare[0], this.puzzle[this.currentSquare[0]][this.currentSquare[1]]) && 
-                        this.verifyColumn(this.currentSquare[1], this.puzzle[this.currentSquare[0]][this.currentSquare[1]]) && 
-                        this.verifyBox(this.currentSquare[0], this.currentSquare[1], this.puzzle[this.currentSquare[0]][this.currentSquare[1]])){
-                        //this.updateDisplay(this.currentSquare[i],this.currentSquare[1],this.puzzle[i][j]);
-                        this.nextSquare();
-                        i = this.currentSquare[0];
-                        j = this.currentSquare[1];
-                        }
-                    }else{
-                        this.puzzle[this.currentSquare[0]][this.currentSquare[1]] = 0;
-                        //this.updateDisplay(this.currentSquare[0],this.currentSquare[1],this.puzzle[i][j]);
-                        this.previousSquare();
-                        i = this.currentSquare[0];
-                        j = this.currentSquare[1];
-                    }
-                }else{
-                    this.nextSquare();
-                    i = this.currentSquare[0];
-                    j = this.currentSquare[1];
+   solveInstant(){
+    for(var i = 0; i < 9; i++){
+        for(var j = 0; j < 9; j++){
+           if(this.restrictedValues[i][j] == false){
+               this.puzzle[i][j]++
+
+               this.updateDisplay(i, j, this.puzzle[i][j])
+
+               if(this.puzzle[i][j] > 9){
+                   this.puzzle[i][j] = 0
+                   this.updateDisplay(i, j, this.puzzle[i][j])
+                   if(j == 0){
+                       i--
+                       j = 9
+                   }
+                   j--
+                   while(this.restrictedValues[i][j] == true){
+                       if(j == 0){
+                           i--
+                           j = 8
+                       }
+                       else{
+                           j--
+                       }
+                   }
+                   j--
+               }
+               else if(this.verifyRow(i,this.puzzle[i][j]) == false || this.verifyColumn(j,this.puzzle[i][j]) == false || this.verifyBox(i,j,this.puzzle[i][j]) == false){
+                   j--
+                }
                 }
             }
-        }
-        
+        }   
+        this.finishAnimation();
     }
 
     /*
@@ -437,7 +442,7 @@ class thePuzzle{
 }
 
 var slider = document.getElementById('myRange')
-var speed = 0;
+var speed = 16;
 
 cell = document.querySelectorAll('input')
 solveButton = document.querySelector('button')
@@ -479,13 +484,17 @@ examplePuzzleButton.addEventListener('click', examplePuzz);
 //This is responsible for changing the speed of the solve function
 slider.oninput = function(){
     slider = this.value;
-    speed = 105 - (parseInt(slider, 10));
+    speed = 79 - (parseInt(slider, 10));
 }
 
 
 //responsible for starting the solve function
 function solver(){
-    interval = setInterval( () => puzz.solve(), speed);
+    if(speed < 4){
+        puzz.solveInstant();
+    }else{
+        interval = setInterval( () => puzz.solve(), speed);
+    }
 }
 
 
